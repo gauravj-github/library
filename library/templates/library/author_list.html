@@ -1,0 +1,46 @@
+{% extends 'library/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Authors</h2>
+    <a href="{% url 'author-add' %}" class="btn btn-success">Add Author</a>
+</div>
+
+{% if authors %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Bio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+            <tr>
+                <td>{{ author.name }}</td>
+                <td>{{ author.email }}</td>
+                <td>{{ author.bio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if authors.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ authors.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+            <li class="page-item disabled"><a class="page-link">Page {{ authors.number }} of {{ authors.paginator.num_pages }}</a></li>
+
+            {% if authors.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ authors.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+{% else %}
+    <div class="alert alert-warning">No authors found.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'library/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Borrow Records</h2>
+    <a href="{% url 'borrow-add' %}" class="btn btn-success">Add Borrow Record</a>
+</div>
+
+{% if borrows %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Book</th>
+                <th>Borrow Date</th>
+                <th>Return Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in borrows %}
+            <tr>
+                <td>{{ record.user_name }}</td>
+                <td>{{ record.book.title }}</td>
+                <td>{{ record.borrow_date }}</td>
+                <td>{{ record.return_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if borrows.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ borrows.previous_page_number }}">Previous</a></li>
+            {% endif %}
+
+            <li class="page-item disabled"><a class="page-link">Page {{ borrows.number }} of {{ borrows.paginator.num_pages }}</a></li>
+
+            {% if borrows.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ borrows.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+{% else %}
+    <div class="alert alert-warning">No borrow records found.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'library/base.html' %}
+{% block content %}
+<div class="card mx-auto" style="max-width: 600px;">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Add New Book</h5>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success mt-2">Save</button>
+            <a href="{% url 'book-list' %}" class="btn btn-secondary mt-2">Back to List</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
